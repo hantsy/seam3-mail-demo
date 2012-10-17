@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.org/seam/faces"
+	template="/resources/forge-template.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<s:viewAction action="#{conversation.end}"
+				if="#{not conversation.transient}" immediate="true" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="header">
+		Contact
+	</ui:define>
+
+	<ui:define name="subheader">
+		Listing all contacts.
+	</ui:define>
+
+	<ui:define name="footer">
+	</ui:define>
+
+	<ui:define name="main">
+		<h:form id="form">
+			<h:messages />
+
+			<h:panelGrid columns="2">
+				<h:outputLabel value="To:" />
+				<h:inputText value="#{composeAction.message.to}" />
+				
+				<h:outputLabel value="Subject:" />
+				<h:inputText value="#{composeAction.message.subject}" />
+
+				<h:outputLabel value="Content:" />
+				<h:inputTextarea value="#{composeAction.message.content}" rows="6" style="width:500px"/>
+				<h:commandButton action="#{compoaseAction.send}" value="Send" />
+				<h:panelGroup></h:panelGroup>
+
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="left">
+	</ui:define>
+
+</ui:composition>
+
+
