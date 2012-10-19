@@ -9,8 +9,8 @@
         http://docs.jboss.org/cdi/beans_1_0.xsd">
 
 	<mail:MailConfig serverHost="smtp.gmail.com"
-		serverPort="587" auth="true" enableTls="true" username="frankouz.ramirez@gmail.com"
-		password="abcd2010">
+		serverPort="587" auth="true" enableTls="true" username="your gmail accout"
+		password="<your password>">
 		<ee:modifies />
 	</mail:MailConfig>
 
