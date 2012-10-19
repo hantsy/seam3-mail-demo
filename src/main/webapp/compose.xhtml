@@ -10,17 +10,16 @@
 
 	<ui:define name="metadata">
 		<f:metadata>
-			<s:viewAction action="#{conversation.end}"
-				if="#{not conversation.transient}" immediate="true" />
+			<!-- s:viewAction action="#{composeAction.select()}" /-->
 		</f:metadata>
 	</ui:define>
 
 	<ui:define name="header">
-		Contact
+		Compose(Sending email without UI blocking)
 	</ui:define>
 
 	<ui:define name="subheader">
-		Listing all contacts.
+		Compose and send a new message.
 	</ui:define>
 
 	<ui:define name="footer">
@@ -39,7 +38,7 @@
 
 				<h:outputLabel value="Content:" />
 				<h:inputTextarea value="#{composeAction.message.content}" rows="6" style="width:500px"/>
-				<h:commandButton action="#{compoaseAction.send}" value="Send" />
+				<h:commandButton action="#{composeAction.send}" value="Send" />
 				<h:panelGroup></h:panelGroup>
 
 			</h:panelGrid>

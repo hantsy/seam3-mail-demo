@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#compose.xhtml" PATH="/compose.xhtml"
+  SHAPE="135,250,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#compose.xhtml:0" NAME="item"
+   PATH="/compose.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID=":#{composeAction.send}:#index.html"
+    NAME="output" PATH="/index.html" TARGET="rules:#index.html"
+    TITLE="#{composeAction.send}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="389,241,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#index.html" PATH="/index.html"
+  SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#compose1.xhtml" PATH="/compose1.xhtml"
+  SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#compose1.xhtml:0" NAME="item"
+   PATH="/compose1.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID=":#{composeAction1.send}:#index.html"
+    NAME="output" PATH="/index.html" TARGET="rules:#index.html"
+    TITLE="#{composeAction1.send}:[any]" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

@@ -6,8 +6,10 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jboss.solder.core.Veto;
 
-public class WebMessage implements Serializable {
+@Veto
+public class EmailMessage implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,6 +19,8 @@ public class WebMessage implements Serializable {
 
 	private String htmlContent;
 
+	@NotNull
+	@NotEmpty
 	private String content;
 
 	@Email
@@ -26,7 +30,6 @@ public class WebMessage implements Serializable {
 
 	@Email
 	private String from;
-
 
 	public String getSubject() {
 		return subject;

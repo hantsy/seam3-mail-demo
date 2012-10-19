@@ -13,14 +13,14 @@ import org.jboss.seam.international.status.builder.BundleKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.hantsylabs.example.maildemo.mail.MailProcessor;
 import com.hantsylabs.example.maildemo.model.EmailMessage;
 
-
 @RequestScoped
-@Named(value = "composeAction")
-public class ComposeAction {
+@Named(value = "composeAction1")
+public class ComposeAction1 {
 	private static final Logger log = LoggerFactory
-			.getLogger(ComposeAction.class);
+			.getLogger(ComposeAction1.class);
 
 	@Inject
 	FacesContext facesContext;
@@ -28,8 +28,12 @@ public class ComposeAction {
 	@Inject
 	Messages messages;
 
-	@Inject @NoneBlocking
+	@Inject
+	@Blocking
 	Event<EmailMessage> messageEventSrc;
+
+	@Inject
+	MailProcessor processor;
 
 	private EmailMessage message;
 
@@ -44,7 +48,7 @@ public class ComposeAction {
 	/**
 	 * Default constructor.
 	 */
-	public ComposeAction() {
+	public ComposeAction1() {
 	}
 
 	@PostConstruct
@@ -58,12 +62,13 @@ public class ComposeAction {
 			log.debug("send...@" + message);
 		}
 
+		processor.send(message);
 		messageEventSrc.fire(message);
 
 	}
 
-	public void onSaved(@Observes @NoneBlocking EmailMessage _message) {
-		messages.info(new BundleKey("messages", "email.sending"))
-				.defaults("Email message is sending...").build();
+	public void onSaved(@Observes @Blocking EmailMessage _message) {
+		messages.info(new BundleKey("messages", "email.sent"))
+				.defaults("Email message was sent successfully...").build();
 	}
 }

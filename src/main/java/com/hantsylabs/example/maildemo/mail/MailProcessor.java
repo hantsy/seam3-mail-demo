@@ -1,27 +1,18 @@
 package com.hantsylabs.example.maildemo.mail;
 
-import java.io.Serializable;
-
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateless;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
 import javax.mail.Session;
 
-import org.jboss.seam.jms.AbstractMessageListener;
 import org.jboss.seam.mail.api.MailMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hantsylabs.example.maildemo.model.WebMessage;
+import com.hantsylabs.example.maildemo.model.EmailMessage;
 
-@SessionScoped
-@Named
-public class MailProcessor extends AbstractMessageListener implements
-		Serializable {
+@Stateless
+public class MailProcessor {
 	private static final Logger log = LoggerFactory
 			.getLogger(MailProcessor.class);
 
@@ -31,7 +22,7 @@ public class MailProcessor extends AbstractMessageListener implements
 	@Inject
 	private transient Instance<Session> session;
 
-	private void send(WebMessage message) {
+	public void send(EmailMessage message) {
 		if (log.isDebugEnabled()) {
 			log.debug("send email@ message object->" + message);
 		}
@@ -53,18 +44,5 @@ public class MailProcessor extends AbstractMessageListener implements
 		}
 
 		msg.send(session.get());
-
-	}
-
-	@Override
-	protected void handleMessage(Message _msg) throws JMSException {
-		if (log.isDebugEnabled()) {
-			log.debug("call handleMessage...");
-		}
-
-		ObjectMessage objMessage = (ObjectMessage) _msg;
-		WebMessage mailMessage = (WebMessage) objMessage.getObject();
-		send(mailMessage);
-
 	}
 }
