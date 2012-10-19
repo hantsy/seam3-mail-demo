@@ -18,7 +18,7 @@
 		<scope>compile</scope>
 	</dependency>
   
- Add mail configuration in *META-INF/seam-beans.xml*. 
+ Add basic mail configuration in your *META-INF/seam-beans.xml*. 
   
   	<mail:MailConfig serverHost="smtp.gmail.com"
 		serverPort="587" 
@@ -29,7 +29,7 @@
 		<ee:modifies />
 	</mail:MailConfig>
  
- Inject `MailMessage` and java mail `Session`.
+ In your Java codes, inject `MailMessage` and JavaMail specific `Session`.
   
   	@Inject
 	private transient Instance<MailMessage> mailMessage;
@@ -37,7 +37,7 @@
 	@Inject
 	private transient Instance<Session> session;
   
- `MailMessage` is fluid API to build message object and  send message.
+ `MailMessage` is fluid API to build message object and send message.
   
    	MailMessage msg = mailMessage.get();
 	msg.subject("test subject")
@@ -47,13 +47,13 @@
 
  But when you try to send an email from jsf pages, the page will be blocked when the email is being sent. 
   
- You maybe know in EJB, you can use a `@Stateless` EJB and put the logic in a `@Asynchronous` method to do some work asynchronously. But but it still does not work, there is an issue when use @Asynchronous with CDI context.
+ EJB 3.1 provides a simple way to execute asynchronous action. You can simply create a `@Stateless` EJB and put the logic in a `@Asynchronous` method. But when you try to use @Asynchronous and CDI together, it does not work.
   
 ##Send email asynchronously with JMS
   
- Seam 3 also provides a JMS module which simplify JMS and CDI integration.
+ Seam 3 also provides a JMS module which simplify JMS and CDI integration, we can utilize JMS to process the asynchronous work.
   
- Configure the JMS connection factory.
+ Configure the JMS connection factory in your *META-INF/seam-beans.xml*.
   
   	<jmsi:JmsConnectionFactoryProducer>
 		<ee:modifies />
@@ -62,7 +62,7 @@
 		</jmsi:connectionFactoryJNDILocation>
 	</jmsi:JmsConnectionFactoryProducer>
   	
- Create a jms listener to process message when the message object is arrived.
+ Create a standard JMS listener to handle JMS message.
   
   	@MessageDriven(....)
 	public class MailProcessorMDB extends MessageListener {
@@ -87,15 +87,15 @@
  
  When a message is arrived, the listener will call `MailProcessor` to process email.
   
- Use a interface to observe the CDI event and route to the JMS queue.
+ Use an interface to observe the CDI event and route it to the JMS queue.
   
   	@Outbound
 	public void mapStatusToQueue(@Observes @NoneBlocking EmailMessage message,
 			@JmsDestination(jndiName = "java:/queue/test") Queue q);
   
- In the presentation layer, fire an event directly. The event object will be routed as payload of JMS message automatically.
+ In the presentation layer, fire an event directly. The event object will be routed as the payload of JMS message automatically.
    
-   messageEventSrc.fire(message);
+ 	messageEventSrc.fire(message);
 
   
 ##Run the project
@@ -106,7 +106,7 @@
   
   		git clone git://github.com/hantsy/seam3-mail-demo.git
   	
-  2.Start JBoss AS with standalone full profile.
+  2.Start JBoss AS with standalone full profile which includes JMS support.
   	
   		<JBOSS_HOME>\bin\standalone.bat --server-config=standalone-full.xml
   	
