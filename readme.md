@@ -1,5 +1,6 @@
 #Send email with Seam 3 Mail and JMS
 
+JavaLobby post link [http://java.dzone.com/articles/send-email-seam-3-mail-and-jms](http://java.dzone.com/articles/send-email-seam-3-mail-and-jms)
 
 Seam 3 Mail module provides simple API to use Java Mail API to send email message.
   
